@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title></title>
+</head>
+<body>
+<h1>VM List</h1>
+<table class="table table-striped table-bordered table-condensed" border="1">
+    <tr th:each="rule : ${rules}">
+        <td th:text="${rule.status.id}">aaa</td>
+        <td th:text="${rule.status.name}">aaa</td>
+        <td th:text="${rule.status.state}">aaa</td>
+        <td th:text="${rule.status.directory}">aaa</td>
+        <td th:text="${rule.vmInfo.name}">aaa</td>
+        <td th:text="${rule.vmInfo.guestOS}">aaa</td>
+        <td th:text="${rule.vmInfo.configFile}">aaa</td>
+        <td th:text="${rule.vmInfo.memorySize}">aaa</td>
+        <td th:text="${rule.vmInfo.numberOfCpus}">aaa</td>
+        <td th:text="${rule.vmInfo.state}">aaa</td>
+        <td>
+            <ul th:each="nickRule : ${rule.vmInfo.nicRules}">
+                <li><span th:text="${nickRule.ruleName}"></span> guest:<span th:text="${nickRule.guestPort}"></span> ->
+                    host:<span th:text="${nickRule.hostPort}"></span></li>
+            </ul>
+        </td>
+    </tr>
+</table>
+</body>
+</html>
