@@ -25,7 +25,7 @@ public class GlobalStatus implements Comparable<GlobalStatus> {
     }
 
     public static enum MachineState {
-        RUNNING, POWEROFF, STOPPED, SUSPENDED;
+        RUNNING, POWEROFF, GURUMEDITATION, STOPPED, SUSPENDED;
 
         public static MachineState of(String name) {
             return MachineState.valueOf(name.toUpperCase());
