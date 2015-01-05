@@ -526,13 +526,13 @@ public class LocalRuleServiceTest {
         GlobalStatusCommand globalStatusCommand = new GlobalStatusCommand(() -> Arrays.asList(("id       name    provider   state    directory\n" +
                 "-------------------------------------------------------------------------\n" +
                 "fd499a5  default virtualbox poweroff /home/maki/work/centos7\n" +
-                "e3f0b76  default virtualbox poweroff /home/maki/work/vagrant-oracle-11g\n" +
+                "e3f0b76  default virtualbox running /home/maki/work/vagrant-oracle-11g\n" +
                 "36b8555  default virtualbox poweroff /home/maki/vagrant/foundationdb\n" +
                 "\n" +
                 "The above shows information about all known Vagrant environments\n" +
                 "on this machine. This data is cached and may not be completely\n" +
                 "up-to-date. To interact with any of the machines, you can go to\n" +
-                "that directory and run Vagrant, or you can use the ID directly\n" +
+                "that directory and up Vagrant, or you can use the ID directly\n" +
                 "with Vagrant commands from any directory. For example:\n" +
                 "\"vagrant destroy 1a2b3c4d\"")
                 .split("\n")));

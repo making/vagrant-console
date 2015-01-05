@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import vagrant.localrule.LocalRule;
 
 import javax.annotation.PostConstruct;
@@ -45,21 +46,30 @@ public class LocalRuleController {
         return "index";
     }
 
-    @RequestMapping(value = "/", params = "command=up")
+    @RequestMapping(value = "/", params = "command=normal-up")
     String up(@RequestParam String id) {
-        restTemplate.postForObject(targetPath + "/up?id=" + id, null, Void.class);
+        restTemplate.postForObject(targetPath + "/normal-up?id=" + id, null, Void.class);
+        return "redirect:/";
+    }
+
+    @RequestMapping(value = "/", params = "command=up")
+    String localRuleUp(@RequestParam String base, @RequestParam boolean isFast, RedirectAttributes attributes) {
+        restTemplate.postForObject(targetPath + "/up?base=" + base + "&isFast=" + isFast, null, Void.class);
+        attributes.addFlashAttribute("message", "Wait a moment and reload this page!");
         return "redirect:/";
     }
 
     @RequestMapping(value = "/", params = "command=halt")
-    String halt(@RequestParam String id) {
+    String halt(@RequestParam String id, RedirectAttributes attributes) {
         restTemplate.postForObject(targetPath + "/halt?id=" + id, null, Void.class);
+        attributes.addFlashAttribute("message", "Wait a moment and reload this page!");
         return "redirect:/";
     }
 
     @RequestMapping(value = "/", params = "command=destroy")
-    String destroy(@RequestParam String id) {
+    String destroy(@RequestParam String id, RedirectAttributes attributes) {
         restTemplate.postForObject(targetPath + "/destroy?id=" + id, null, Void.class);
+        attributes.addFlashAttribute("message", "Wait a moment and reload this page!");
         return "redirect:/";
     }
 }

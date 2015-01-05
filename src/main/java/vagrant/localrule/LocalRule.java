@@ -1,5 +1,6 @@
 package vagrant.localrule;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,6 +15,7 @@ import java.util.Objects;
 public class LocalRule implements Comparable<LocalRule> {
     private GlobalStatus status;
     private VmInfo vmInfo;
+    private boolean isFast;
 
     @Override
     public int compareTo(LocalRule o) {

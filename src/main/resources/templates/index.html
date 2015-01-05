@@ -14,6 +14,11 @@
             font-weight: bold;
         }
 
+        .state-GURUMEDITATION {
+            color: red;
+            font-weight: bold;
+        }
+
         input[type=submit] {
             width: 60px;
         }
@@ -21,6 +26,8 @@
 </head>
 <body>
 <h1>VM List</h1>
+
+<p th:if="${message}"><span th:text="${message}">hoge</span></p>
 <table class="table table-striped table-bordered table-condensed" border="1">
     <tr>
         <th colspan="4">Vagrant</th>
@@ -66,13 +73,19 @@
             </table>
         </td>
         <td>
-            <form th:action="@{/}" method="POST">
+            <form th:action="@{/}" method="POST" onsubmit="return confirm('Are you sure to up?')">
                 <input type="hidden" name="id" th:value="${rule.status.id}"/>
+                <input type="hidden" name="base" th:value="${rule.status.directory}"/>
+                <input type="hidden" name="isFast" th:value="${rule.fast}"/>
                 <input type="submit" name="command" value="up"/>
             </form>
-            <form th:action="@{/}" method="POST">
+            <form th:action="@{/}" method="POST" onsubmit="return confirm('Are you sure to halt?')">
                 <input type="hidden" name="id" th:value="${rule.status.id}"/>
                 <input type="submit" name="command" value="halt"/>
+            </form>
+            <form th:action="@{/}" method="POST" onsubmit="return confirm('[Danger!!!] Are you sure to destroy?')">
+                <input type="hidden" name="id" th:value="${rule.status.id}"/>
+                <input type="submit" name="command" value="destroy"/>
             </form>
         </td>
     </tr>

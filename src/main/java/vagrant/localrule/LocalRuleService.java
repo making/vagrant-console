@@ -26,7 +26,11 @@ public class LocalRuleService {
                                 .findFirst().get(),
                         Function.identity()));
         return globalStatusCommand.stream()
-                .map(x -> new LocalRule(x, map.get(x.getDirectory())))
+                .map(x -> {
+                    VmInfo vmInfo = map.get(x.getDirectory());
+                    boolean isFast = vmInfo != null && vmInfo.getName() != null && vmInfo.getName().startsWith("fast");
+                    return new LocalRule(x, vmInfo, isFast);
+                })
                 .sorted()
                 .collect(Collectors.toList());
     }
