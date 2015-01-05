@@ -2,27 +2,78 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
-    <title></title>
+    <title>VM List</title>
+    <style type="text/css">
+        .state-RUNNING {
+            color: green;
+            font-weight: bold;
+        }
+
+        .state-POWEROFF {
+            color: blue;
+            font-weight: bold;
+        }
+
+        input[type=submit] {
+            width: 60px;
+        }
+    </style>
 </head>
 <body>
 <h1>VM List</h1>
 <table class="table table-striped table-bordered table-condensed" border="1">
+    <tr>
+        <th colspan="4">Vagrant</th>
+        <th colspan="7">Virtual Box</th>
+        <th rowspan="2">Action</th>
+    </tr>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>State</th>
+        <th>Path</th>
+        <th>Name</th>
+        <th>OS</th>
+        <th>Config Path</th>
+        <th>Memory</th>
+        <th>CPU</th>
+        <th>State</th>
+        <th>Nic</th>
+    </tr>
     <tr th:each="rule : ${rules}">
         <td th:text="${rule.status.id}">aaa</td>
         <td th:text="${rule.status.name}">aaa</td>
-        <td th:text="${rule.status.state}">aaa</td>
+        <td th:class="${'state-' + rule.status.state}" th:text="${rule.status.state}">aaa</td>
         <td th:text="${rule.status.directory}">aaa</td>
-        <td th:text="${rule.vmInfo.name}">aaa</td>
-        <td th:text="${rule.vmInfo.guestOS}">aaa</td>
-        <td th:text="${rule.vmInfo.configFile}">aaa</td>
-        <td th:text="${rule.vmInfo.memorySize}">aaa</td>
-        <td th:text="${rule.vmInfo.numberOfCpus}">aaa</td>
-        <td th:text="${rule.vmInfo.state}">aaa</td>
+        <td th:if="${rule.vmInfo}" th:text="${rule.vmInfo.name}">aaa</td>
+        <td th:if="${rule.vmInfo}" th:text="${rule.vmInfo.guestOS}">aaa</td>
+        <td th:if="${rule.vmInfo}" th:text="${rule.vmInfo.configFile}">aaa</td>
+        <td th:if="${rule.vmInfo}" th:text="${rule.vmInfo.memorySize}">aaa</td>
+        <td th:if="${rule.vmInfo}" th:text="${rule.vmInfo.numberOfCpus}">aaa</td>
+        <td th:if="${rule.vmInfo}" th:text="${rule.vmInfo.state}">aaa</td>
+        <td th:if="${rule.vmInfo}">
+            <table border="1">
+                <tr>
+                    <th>Name</th>
+                    <th>Guest</th>
+                    <th>Host</th>
+                </tr>
+                <tr th:each="nickRule : ${rule.vmInfo.nicRules}">
+                    <td th:text="${nickRule.ruleName}">a</td>
+                    <td th:text="${nickRule.guestPort}">a</td>
+                    <td th:text="${nickRule.hostPort}">a</td>
+                </tr>
+            </table>
+        </td>
         <td>
-            <ul th:each="nickRule : ${rule.vmInfo.nicRules}">
-                <li><span th:text="${nickRule.ruleName}"></span> guest:<span th:text="${nickRule.guestPort}"></span> ->
-                    host:<span th:text="${nickRule.hostPort}"></span></li>
-            </ul>
+            <form th:action="@{/}" method="POST">
+                <input type="hidden" name="id" th:value="${rule.status.id}"/>
+                <input type="submit" name="command" value="up"/>
+            </form>
+            <form th:action="@{/}" method="POST">
+                <input type="hidden" name="id" th:value="${rule.status.id}"/>
+                <input type="submit" name="command" value="halt"/>
+            </form>
         </td>
     </tr>
 </table>

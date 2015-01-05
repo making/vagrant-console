@@ -27,6 +27,8 @@ public class LocalRuleService {
                         Function.identity()));
         return globalStatusCommand.stream()
                 .map(x -> new LocalRule(x, map.get(x.getDirectory())))
+                .sorted()
                 .collect(Collectors.toList());
     }
+
 }

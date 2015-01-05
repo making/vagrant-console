@@ -8,16 +8,18 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.test.TestRestTemplate;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.converter.FormHttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.web.client.RestTemplate;
 import vagrant.localrule.LocalRuleEndpoint;
 
-import javax.inject.Inject;
 import javax.inject.Named;
 import javax.ws.rs.ApplicationPath;
 import java.util.Arrays;
 
 @SpringBootApplication
+@EnableAsync
 public class App {
     public static void main(String[] args) {
         SpringApplication.run(App.class, args);
@@ -40,9 +42,8 @@ public class App {
     RestTemplate restTemplate() {
         MappingJackson2HttpMessageConverter messageConverter = new MappingJackson2HttpMessageConverter();
         messageConverter.setObjectMapper(objectMapper());
-        System.out.println(messageConverter.getObjectMapper());
         TestRestTemplate restTemplate = new TestRestTemplate();
-        restTemplate.setMessageConverters(Arrays.asList(messageConverter));
+        restTemplate.setMessageConverters(Arrays.asList(messageConverter, new FormHttpMessageConverter()));
         return restTemplate;
     }
 
@@ -52,7 +53,6 @@ public class App {
 
         public JerseyConfig() {
             this.register(LocalRuleEndpoint.class);
-            System.out.println(sharedObjectMapper);
             JacksonJaxbJsonProvider provider = new JacksonJaxbJsonProvider();
             provider.setMapper(sharedObjectMapper);
             this.register(provider);
