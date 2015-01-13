@@ -34,7 +34,7 @@ public class AbstractCommandResultSupplier implements Supplier<List<String>> {
                 while (stream.read() >= 0) ;
                 return result;
             } finally {
-                log.info("{} => process exit({})", this.args, p.exitValue());
+                log.info("{} => process exit({})", this.args, "dummy"/* p.exitValue()*/);
             }
         } catch (IOException e) {
             throw new UncheckedIOException(e);
