@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.http.converter.FormHttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.client.RestTemplate;
 import vagrant.localrule.LocalRuleEndpoint;
 
@@ -20,6 +21,7 @@ import java.util.Arrays;
 
 @SpringBootApplication
 @EnableAsync
+@EnableScheduling
 public class App {
     public static void main(String[] args) {
         SpringApplication.run(App.class, args);
