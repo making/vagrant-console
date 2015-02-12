@@ -14,7 +14,7 @@ public class VagrantHouseKeeper {
         log.info("scheduled halt start");
         new GlobalStatusCommand().stream()
                 .filter(status -> status.getState() == GlobalStatus.MachineState.RUNNING)
-                .filter(status -> !status.getName().contains("jenkins"))
+                .filter(status -> !status.getDirectory().toString().contains("jenkins"))
                 .forEach(status -> {
                     log.info("halt {}", status);
                     new HaltCommand(status.getId()).run();
