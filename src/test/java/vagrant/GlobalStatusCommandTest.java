@@ -40,6 +40,7 @@ public class GlobalStatusCommandTest {
     }
 
     @Test
+    @Ignore
     public void testListAndUp() throws Exception {
         GlobalStatusCommand command = new GlobalStatusCommand();
         command.stream().sorted((x, y) -> y.compareTo(x)).findFirst().ifPresent(x -> {
