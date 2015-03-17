@@ -61,6 +61,9 @@ public class ListVmsCommand extends AbstractCommand {
                 List<SharedFolder> sharedFolders = new ArrayList<>();
                 parseSharedFolders(iterator.next(), iterator, sharedFolders);
                 builder.sharedFolders(sharedFolders);
+            } else if (line.startsWith("Description:") && builder != null) {
+                String description = iterator.next();
+                builder.description(description);
             }
         }
         if (builder != null) {

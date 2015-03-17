@@ -23,4 +23,5 @@ public class VmInfo {
     private String state;
     private List<NicRule> nicRules;
     private List<SharedFolder> sharedFolders;
+    private String description;
 }
