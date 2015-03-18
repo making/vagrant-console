@@ -2,11 +2,15 @@ package vagrant;
 
 import lombok.extern.slf4j.Slf4j;
 
-import java.io.*;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.UncheckedIOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.function.Supplier;
-import java.util.stream.Collectors;
 
 @Slf4j
 public class AbstractCommandResultSupplier implements Supplier<List<String>> {
@@ -27,20 +31,23 @@ public class AbstractCommandResultSupplier implements Supplier<List<String>> {
             pb.redirectErrorStream(true);
             Process p = pb.start();
             log.info("{} => process start", this.args);
-            //p.waitFor();
+            String line;
             try (InputStream stream = p.getInputStream();
-                 BufferedReader reader = new BufferedReader(new InputStreamReader(stream))) {
-                List<String> result = reader.lines().collect(Collectors.toList());
-                while (stream.read() >= 0) ;
-                return result;
-            } finally {
-                log.info("{} => process exit({})", this.args, "dummy"/* p.exitValue()*/);
+                 ByteArrayOutputStream out = new ByteArrayOutputStream();) {
+                int b;
+                while ((b = stream.read()) != -1) {
+                    out.write(b);
+                }
+                line = new String(out.toByteArray());
             }
+            int exitValue = p.waitFor();
+            log.info("{} => process exit({})", this.args, exitValue);
+            return Arrays.asList(line.split(System.lineSeparator()));
         } catch (IOException e) {
             throw new UncheckedIOException(e);
-        }/* catch (InterruptedException e) {
+        } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
             return Collections.emptyList();
-        }*/
+        }
     }
 }
