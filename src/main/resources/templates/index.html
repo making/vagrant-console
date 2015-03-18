@@ -41,6 +41,7 @@
         <th>Path</th>
         <th>Name</th>
         <th>OS</th>
+        <th>Description</th>
         <th>Config Path</th>
         <th>Memory</th>
         <th>CPU</th>
@@ -54,6 +55,7 @@
         <td th:text="${rule.status.directory}">aaa</td>
         <td th:if="${rule.vmInfo}" th:text="${rule.vmInfo.name}">aaa</td>
         <td th:if="${rule.vmInfo}" th:text="${rule.vmInfo.guestOS}">aaa</td>
+        <td th:if="${rule.vmInfo}" th:text="${rule.vmInfo.description}">aaa</td>
         <td th:if="${rule.vmInfo}" th:text="${rule.vmInfo.configFile}">aaa</td>
         <td th:if="${rule.vmInfo}" th:text="${rule.vmInfo.memorySize}">aaa</td>
         <td th:if="${rule.vmInfo}" th:text="${rule.vmInfo.numberOfCpus}">aaa</td>
