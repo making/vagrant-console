@@ -23,7 +23,7 @@ public class LocalRuleService {
                 .collect(Collectors.toMap(x -> x.getSharedFolders().stream()
                                 .filter(info -> "vagrant".equals(info.getName()))
                                 .map(SharedFolder::getHostPath)
-                                .findFirst().get(),
+                                .findFirst().orElse(null),
                         Function.identity()));
         return globalStatusCommand.stream()
                 .map(x -> {
